@@ -24,7 +24,7 @@ class _GameScreenState extends State<GameScreen> {
   static const double _ballSpeed = 4.0; // pixels per tick, ~60 ticks/sec
   static const Color _paddleColor = Colors.white;
   static const Color _ballColor = Colors.white;
-  static int numLives = 2;
+  static int _numLives = 2;
 
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   Timer? _gameTimer; // drives the ball while playing
@@ -49,7 +49,7 @@ class _GameScreenState extends State<GameScreen> {
   void initState() {
     super.initState();
     widget.gameState.score = 0;
-    widget.gameState.lives = numLives;
+    widget.gameState.lives = _numLives;
     // Listen for tilt and move the paddle, but only once the game has started.
     _accelerometerSubscription = accelerometerEventStream().listen((AccelerometerEvent event) {
       if (!_isPlaying) return;
@@ -253,7 +253,7 @@ class _GameScreenState extends State<GameScreen> {
                           ),
                         ),
                       ),                      
-                      if (!_isPlaying && widget.gameState.lives == numLives)
+                      if (!_isPlaying && widget.gameState.lives == _numLives)
                         const Center(
                           child: Text(
                             'Tap Start To Begin!',
@@ -261,7 +261,7 @@ class _GameScreenState extends State<GameScreen> {
                                 TextStyle(color: Colors.white, fontSize: 20.0),
                           ),
                         ), 
-                      if (!_isPlaying && widget.gameState.lives < numLives)
+                      if (!_isPlaying && widget.gameState.lives < _numLives)
                         const Center(
                           child: Text(
                             'Tap Start To Keep Playing!',

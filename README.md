@@ -14,17 +14,15 @@ A game where the player bounces a ball upwards to break blocks using the acceler
 
 ## Who the app is for
 
-
+This app is for anyone interested in implementing an accelerometer or timer in a Flutter application, or anyone just looking to enjoy our game!
 
 ## What it does
 
-
+This app uses a phone's accelerometer to control a sliding paddle. The location of the paddle dictates whether a bouncing ball will continue bouncing upward and breaking blocks, or fall to the floor. Once you are out of lives, the event of the ball hitting the floor triggers the finishing of your game and changes screens for you.
 
 ## Why it's useful
  
-
-## Features
- 
+This app is useful because it provides an example of how to implement an accelerometer and timer in Flutter. It also provides examples of 12 colors from the Flutter Colors package with the blocks. Most importantly, the game is enjoyable to play!
 
 ## Screenshots
 
