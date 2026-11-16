@@ -32,7 +32,9 @@ class _GameScreenState extends State<GameScreen> {
   double _paddleX = 0.0; // -1.0 (left) to 1.0 (right)
   double _ballX = 0.0;
   double _ballY = 0.0;
+  final double _ballSpeedXMax = _ballSpeed; // The maximum horizontal speed the ball can move, if it hits the very edge of the paddle
   double _ballSpeedX = _ballSpeed;
+  final double _ballSpeedYMax = _ballSpeed; // OPTIONAL: The maximum vertical speed the ball can move, if it hits the dead center of the paddle
   double _ballSpeedY = -_ballSpeed; // starts moving up
   Size _screenSize = Size.zero; // set once LayoutBuilder measures the screen
   bool _isPlaying = false;
@@ -120,6 +122,12 @@ class _GameScreenState extends State<GameScreen> {
       if (_ballSpeedY > 0 && hitsPaddleX && hitsPaddleY) {
         _ballY = _paddleTop - _ballSize;
         _ballSpeedY = -_ballSpeedY;
+        // The angle the ball bounces depends where it contacts the paddle
+        _ballSpeedX = _ballSpeedXMax * ((((ballCenterX - _paddleLeft) / _paddlewidth) * 2) - 1);
+        // OPTIONAL: the vertical speed of the ball increases the lower the horizontal speed is. Comment out the below line to disable this.
+        _ballSpeedY = -_ballSpeedYMax * (((1 - ((_ballSpeedX / _ballSpeedXMax).abs())) * (0.41)) + 1); //_ballSpeedYMax actually isn't the highest the y value can go; its actually the lowest. This line just makes it so that a ball which is moving more vertically than horizontally moves faster vertically, so its actually adding speed.
+        //^^^^^I considered replacing the 0.4 with ((2/sqrt(2)) - 1) to get the right angle calculations, 
+        //but I didn't want to import math just for this one thing. 0.41 should be close enough.
       } else if (_ballY >= _screenSize.height - _ballSize) {
         // Remove a life if the ball hits the bottom.
         widget.gameState.removeLife();
